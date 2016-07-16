@@ -8,8 +8,8 @@ function [J, grad] = costFunction(theta, X, y)
 m = length(y); % number of training examples
 
 % You need to return the following variables correctly
-J = 0;
-grad = zeros(size(theta));
+J = 0; % cost function
+grad = zeros(size(theta)); % gradient
 
 % ====================== YOUR CODE HERE ======================
 % Instructions: Compute the cost of a particular choice of theta.
@@ -20,13 +20,21 @@ grad = zeros(size(theta));
 % Note: grad should have the same dimensions as theta
 %
 
+% logistic regression hypothesis
 h_theta = sigmoid(X * theta);
 one = ones(m, 1);
 
+% find indices of positive and negative examples
 pos = find(y == 1);
 neg = find(y == 0);
 
+% compute cost function and gradient in logistic regression
+% J(\theta) = \frac{1}{m} \sum_{i=1}^{m} {-y^{(i)} log(h_{\theta}(x^{(i)})) -
+%              (1 - y^{(i)}) log(1 - h_{\theta}(x^{(i)}))}
 J = -(y' * log(h_theta) + (one - y)' * log(one - h_theta)) / m;
+
+% \frac{\partial J(\theta)}{\partial \theta_{j}} = \frac{1}{m} \sum_{i=1}^{m} {
+% (h_{\theta}(x^{(i)}) - y^{(i)}) x_{j}^{(i)} }
 grad = (h_theta - y)' * X / m;
 
 % =============================================================
