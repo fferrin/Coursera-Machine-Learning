@@ -7,14 +7,16 @@ function J = computeCostMulti(X, y, theta)
 m = length(y); % number of training examples
 
 % You need to return the following variables correctly
-J = 0;
+J = 0; % cost function
 
 % ====================== YOUR CODE HERE ======================
 % Instructions: Compute the cost of a particular choice of theta
 %               You should set J to the cost.
+%
+% J(\theta) = \frac{1}{2m} (X\theta - \vec{y})^{T} (X\theta - \vec{y})
 
 J = (X * theta - y)' * (X * theta - y) / (2 * m);
 
-% =========================================================================
+% ============================================================
 
 end

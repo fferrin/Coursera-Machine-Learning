@@ -26,9 +26,13 @@ function [X_norm, mu, sigma] = featureNormalize(X)
 % Hint: You might find the 'mean' and 'std' functions useful.
 %
 
+% mean of the feature
 mu = ones(size(X, 1), 1)*mean(X);
+% std of the feature
 sigma = ones(size(X, 1), 1)*std(X);
 
+% normalization
+% x_{norm}^{(i)} = \frac{x^{(i)} - \mu}{\sigma}
 X_norm = (X - mu) ./ sigma;
 
 % ============================================================
