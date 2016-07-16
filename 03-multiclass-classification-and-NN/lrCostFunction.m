@@ -9,8 +9,8 @@ function [J, grad] = lrCostFunction(theta, X, y, lambda)
 m = length(y); % number of training examples
 
 % You need to return the following variables correctly
-J = 0;
-grad = zeros(size(theta));
+J = 0; % cost function
+grad = zeros(size(theta)); % gradient
 
 % ====================== YOUR CODE HERE ======================
 % Instructions: Compute the cost of a particular choice of theta.
@@ -36,13 +36,23 @@ grad = zeros(size(theta));
 %           grad = grad + YOUR_CODE_HERE (using the temp variable)
 %
 
-one = ones(size(y));
+% logistic regression hypothesis
 h_theta = sigmoid(X * theta);
+
+one = ones(size(y));
 temp = theta;
 temp(1) = 0;
 
+% compute cost function and gradient in logistic regression
+
+
+% J(\theta) = \frac{1}{m} \sum_{i=1}^{m} {-y^{(i)} log(h_{\theta}(x^{(i)})) -
+%              (1 - y^{(i)}) log(1 - h_{\theta}(x^{(i)}))} +
+%              \frac{\lambda}{2m} \sum_{j=1}^{n} \theta_{j}^{2}
 J = - (y' * log(h_theta) + (one - y)' * log(one - h_theta)) / m + lambda * (temp' * temp) / (2 * m);
 
+% \frac{\partial J(\theta)}{\partial \theta_{j}} = \frac{1}{m} \sum_{i=1}^{m} {
+% (h_{\theta}(x^{(i)}) - y^{(i)}) x_{j}^{(i)} } + \frac{\lambda}{m} \theta_{j}
 grad = X' * (h_theta - y) / m + lambda * temp / m;
 
 % =============================================================
