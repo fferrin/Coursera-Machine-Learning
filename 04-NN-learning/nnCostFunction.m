@@ -62,13 +62,18 @@ Theta2_grad = zeros(size(Theta2));
 %               and Theta2_grad from Part 2.
 %
 
+% a^{(1)} = x
 a_1 = X';
 a_1 = [ones(1, m); a_1];
 
+% z^{(2)} = \Theta^{(1)} a^{(1)}
+% a^{(2)} = g(z^{(2)})
 z_2 = Theta1 * a_1;
 a_2 = sigmoid(z_2);
 a_2 = [ones(1, m); a_2];
 
+% z^{(3)} = \Theta^{(2)} a^{(2)}
+% a^{(3)} = h_{\theta} (x) = g(z^{(3)})
 z_3 = Theta2 * a_2;
 h = sigmoid(z_3);
 
@@ -76,30 +81,41 @@ one = ones(num_labels, 1);
 values = zeros(num_labels, 1);
 
 for i = 1:m
-	values(y(i)) = 1;
-	J = J - (values' * log(h(:, i)) + (one - values)' * log(one - h(:, i)));
+    values(y(i)) = 1;
 
-	delta_3 = h(:, i) - values;
-	delta_2 = Theta2' * delta_3 .* [1; sigmoidGradient(z_2(:, i))];
-	delta_2 = delta_2(2:end);
+    % J(\theta) = \frac{1}{m} \sum_{i=1}^{m} {\sum_{k=1}^{K}
+    %             {[-y_{k}^{(i)} log((h_{\theta}(x^{(i)}))_{k}) -
+    %             (1 - y_{k}^{(i)}) log(1 - (h_{\theta}(x^{(i)}))_{k})]}}
+    J = J - (values' * log(h(:, i)) + (one - values)' * log(one - h(:, i)));
 
-	Theta2_grad = Theta2_grad + delta_3 * (a_2(:, i))';
-	Theta1_grad = Theta1_grad + delta_2 * (a_1(:, i))';
+    % \delta_{j}^{(3)} = a_{j}^{(3)} - y_{j}
+    delta_3 = h(:, i) - values;
 
-	values(y(i)) = 0;
+    % \delta_{j}^{(2)} = (\Theta^{(2)})^{T} \delta^{(3)} .* g'(z^{(2)})
+    delta_2 = Theta2' * delta_3 .* [1; sigmoidGradient(z_2(:, i))];
+    delta_2 = delta_2(2:end);
+
+    % \Delta^{(l)} = \Delta^{(l)} + \delta^{(l+1)} (a^{(l)})^{T}
+    Theta2_grad = Theta2_grad + delta_3 * (a_2(:, i))';
+    Theta1_grad = Theta1_grad + delta_2 * (a_1(:, i))';
+
+    values(y(i)) = 0;
 end
 
 Theta1(:,1) = 0;
 Theta2(:,1) = 0;
 
+% J(\theta) = \frac{1}{m} \sum_{i=1}^{m} {\sum_{k=1}^{K}
+%             {[-y_{k}^{(i)} log((h_{\theta}(x^{(i)}))_{k}) -
+%             (1 - y_{k}^{(i)}) log(1 - (h_{\theta}(x^{(i)}))_{k})]}} +
+%             \frac{\lambda}{2m} [ \sum_{j=1}^{25} {\sum_{k=1}^{400} { (\Theta_{j, k}^{(1)})^2
+%             + \sum_{j=1}^{10} {\sum_{k=1}^{25}} { (\Theta_{j, k}^{(2)})^2}]}}
 J = J/m + lambda * (sum(sum(Theta1 .* Theta1)) + sum(sum(Theta2 .* Theta2))) / (2*m);
 
 Theta1_grad = (Theta1_grad + lambda * Theta1) ./ m;
 Theta2_grad = (Theta2_grad + lambda * Theta2) ./ m;
 
-% -------------------------------------------------------------
-
-% =========================================================================
+% ============================================================
 
 % Unroll gradients
 grad = [Theta1_grad(:) ; Theta2_grad(:)];
