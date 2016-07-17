@@ -16,6 +16,8 @@ sim = 0;
 %
 %
 
+% K_{gaussian} (x^{(i)}, x^{(j)}) = exp\left(- \frac{||x^{(i)} - x^{(j)}||^2}{2 \sigma^2}\right)
+%   = exp\left(- \frac{\sum_{k=1}^{n}{(x_{k}^{(i)} - x_{k}^{(j)})^2}}{2 \sigma^2}\right)
 sim = exp(- sum((x1 - x2).^2) / (2 * sigma^2));
 
 % =============================================================

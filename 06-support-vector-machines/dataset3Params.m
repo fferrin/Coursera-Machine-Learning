@@ -29,27 +29,28 @@ l = length(lambda_vec);
 error = -1;
 
 for i = 1:l
-	C_aux = lambda_vec(i);
+    C_aux = lambda_vec(i);
 
-	for j = 1:l
-		sigma_aux = lambda_vec(j);
+    for j = 1:l
+        sigma_aux = lambda_vec(j);
 
-		model = svmTrain(X, y, C_aux, @(x1, x2) gaussianKernel(x1, x2, sigma_aux));
-		predictions = svmPredict(model, Xval);
-		error_aux = mean(double(predictions ~= yval));
+        model = svmTrain(X, y, C_aux, @(x1, x2) gaussianKernel(x1, x2, sigma_aux));
+        predictions = svmPredict(model, Xval);
+        error_aux = mean(double(predictions ~= yval));
 
-		if error < 0
-			error = error_aux;
-			C = C_aux;
-			sigma = sigma_aux;
-		elseif error_aux < error
-			error = error_aux;
-			C = C_aux;
-			sigma = sigma_aux;
-		end
-	end
+        if error < 0
+            error = error_aux;
+            C = C_aux;
+            sigma = sigma_aux;
+        elseif error_aux < error
+            error = error_aux;
+            C = C_aux;
+            sigma = sigma_aux;
+        end
+    end
 end
 
 % =========================================================================
+
 
 end
