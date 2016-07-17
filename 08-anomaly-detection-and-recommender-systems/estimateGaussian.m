@@ -21,8 +21,10 @@ sigma2 = zeros(n, 1);
 %               should contain variance of the i-th feature.
 %
 
+% \mu_{i} = \frac{1}{m} \sum_{j=1}^{m} {x_{i}^{(j)}}
 mu = mean(X, 1);
 
+% \sigma_{i}^{2} = \frac{1}{m} \sum_{j=1}^{m} {(x_{i}^{(j)} - \mu_{i})^2}
 sigma2 = var(X) * (m - 1) / m;
 
 % =============================================================

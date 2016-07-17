@@ -40,6 +40,8 @@ Theta_grad = zeros(size(Theta));
 %                     partial derivatives w.r.t. to each element of Theta
 %
 
+% J(x^{(1)}, ..., x^{(n_m)}), \theta^{(1)}, ..., \theta^{(n_m)}) = 
+%   \frac{1}{2} \sum_{(i,j):r(i,j)=1} {((\theta^{(j)})^{T} x^{(i)} - y^{(i,j)})^2}
 aux = R.*(X * Theta') - R.*Y;
 J = sum(sum(aux.**2)) / 2 + lambda * (sum(sum(X.**2)) + sum(sum(Theta.**2))) / 2;
 

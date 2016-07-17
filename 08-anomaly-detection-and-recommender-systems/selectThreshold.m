@@ -31,9 +31,14 @@ for epsilon = min(pval):stepsize:max(pval)
 
     [TP FP FN];
     cvPredictions;
+
+    % prec = \frac{TP}{TP + FN}
     P = TP / (TP + FP);
+
+    % rec = \frac{TP}{TP + FP}
     R = TP / (TP + FN);
 
+    % F_1 = \frac{2PR}{P + R}
     F1 = 2 * P * R / (P + R);
 
     % =============================================================
