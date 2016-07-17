@@ -42,9 +42,16 @@ error_val = zeros(length(lambda_vec), 1);
 for i = 1:length(lambda_vec)
 	lambda = lambda_vec(i)
 
+    % calculate parameters
 	theta = trainLinearReg(X, y, lambda);
 
+    % training and cross validation errors
+    % J_{train} (\theta) = \frac{1}{2m_{train}}
+    %   \sum_{i=1}^{m_{train}} {(h_{\theta}(x^{(i)}) - y^{(i)})^2}
 	error_train(i) = linearRegCostFunction(X, y, theta, 0);
+
+    % J_{CV} (\theta) = \frac{1}{2m_{CV}}
+    %   \sum_{i=1}^{m_{CV}} {(h_{\theta}(x^{(i)}) - y^{(i)})^2}
 	error_val(i) = linearRegCostFunction(Xval, yval, theta, 0);
 end
 

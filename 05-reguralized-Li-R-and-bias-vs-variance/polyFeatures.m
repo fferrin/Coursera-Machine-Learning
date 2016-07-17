@@ -15,6 +15,7 @@ X_poly = zeros(numel(X), p);
 %
 %
 
+% h_{\theta}(x) = \sum_{i=0}^{p} {\theta_{i} x_{i}}
 for i = 1:p
 	X_poly(:, i) = X.^i;
 end

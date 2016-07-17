@@ -51,16 +51,18 @@ error_val   = zeros(m, 1);
 %       end
 %
 
-% ---------------------- Sample Solution ----------------------
-
 for i = 1:m
 	theta = trainLinearReg(X(1:i, :), y(1:i), lambda);
 
+    % training and cross validation errors
+    % J_{train} (\theta) = \frac{1}{2m_{train}}
+    %   \sum_{i=1}^{m_{train}} {(h_{\theta}(x^{(i)}) - y^{(i)})^2}
 	error_train(i) = linearRegCostFunction(X(1:i, :), y(1:i), theta, 0);
+
+    % J_{CV} (\theta) = \frac{1}{2m_{CV}}
+    %   \sum_{i=1}^{m_{CV}} {(h_{\theta}(x^{(i)}) - y^{(i)})^2}
 	error_val(i) = linearRegCostFunction(Xval, yval, theta, 0);
 end
-
-% -------------------------------------------------------------
 
 % =========================================================================
 
