@@ -26,6 +26,7 @@ centroids = zeros(K, n);
 % Note: You can use a for-loop over the centroids to compute this.
 %
 
+% \mu_{k} := \frac{1}{|C_{k}|} \sum_{i \in C_{k}} {x^{(i)}}
 for i = 1:K
 	centroids(i, :) = sum(X(idx == i, :)) / sum(idx == i);
 end

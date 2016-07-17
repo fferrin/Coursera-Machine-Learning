@@ -20,6 +20,7 @@ S = zeros(n);
 %       number of examples).
 %
 
+% \Sigma = \frac{1}{m} X^{T} X
 Sigma = (X' * X) ./ m;
 
 [U, S, V] = svd(Sigma);

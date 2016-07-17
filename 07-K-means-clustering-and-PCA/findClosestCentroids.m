@@ -23,6 +23,7 @@ idx = zeros(size(X,1), 1);
 
 m = size(X, 1);
 
+% c^{(i)} := j \text{ that minimizes } ||x^{(i)} - \mu_{j}||^2
 for i = 1:m
 	for j = 1:K
 		aux(j) = sum((centroids(j, :) - X(i, :)).**2);
